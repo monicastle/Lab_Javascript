@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Quehaceres</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Signika+Negative&display=swap"
+        rel="stylesheet">
+
+    <style>
+        h1 {
+            font-family: 'Abril Fatface', cursive;
+            color: #16425B
+        }
+
+        #botonCrear {
+            background-color: #E7BBE3;
+            width: 1in;
+            height: 0.8cm;
+        }
+
+        #botonEliminarCompletados {
+            background-color: #E7BBE3;
+            width: 1.75in;
+            height: 0.8cm;
+        }
+
+        #botonEliminarTodo {
+            background-color: #E7BBE3;
+            width: 1.75in;
+            height: 0.8cm;
+            margin-right: 0.5cm;
+        }
+
+        #textField {
+            width: 2.5in;
+            height: 0.7cm;
+            margin-right: 0.1in;
+        }
+
+        body {
+            margin-left: 1cm;
+            margin-right: 1cm;
+        }
+
+        * {
+            font-family: 'Abril Fatface', cursive;
+            font-family: 'Signika Negative', sans-serif;
+        }
+    </style>
+</head>
+
+<body style="background-color: #AFD2E9">
+    <!-- Lista del quehaceres -->
+    <h1>LISTA DE QUEHACERES</h1>
+    <input id="textField" type="text" placeholder="Tarea" />
+    <button id="botonCrear">Crear Nuevo</button>
+    <br>
+    <br>
+    <div id="lista" type="checkbox">
+        <!-- Lista de elementos -->
+    </div>
+    <br />
+    <div>
+        <button id="botonEliminarTodo">Eliminar Todo</button>
+        <button id="botonEliminarCompletados">Eliminar Completados</button>
+    </div>
+
+    <script>
+        const botonCrear = document.getElementById('botonCrear');
+        const texto = document.getElementById('textField');
+        const lista = document.getElementById('lista');
+        const botonEC = document.getElementById('botonEliminarCompletados');
+        const botonET = document.getElementById('botonEliminarTodo');
+        const mycheck = document.getElementById('check');
+
+        const valores = JSON.parse(localStorage.getItem('valores')) || [];
+
+        for (let i = 0; i < valores.length; i++) {
+            const textoString = valores[i];
+            var nuevoElemento = document.createElement('input');
+            nuevoElemento.setAttribute("type", "checkbox");
+            nuevoElemento.id = "check";
+            const name = document.createElement('label');
+            const salto = document.createElement('br');
+            name.appendChild(document.createTextNode(textoString));
+            lista.appendChild(nuevoElemento);
+            lista.appendChild(name);
+            lista.appendChild(salto);
+        }
+
+        botonCrear.addEventListener('click', function () {
+            const textoString = textField.value;
+            if (textoString != "") {
+                const nuevoElemento = document.createElement('input');
+                nuevoElemento.setAttribute("type", "checkbox");
+                nuevoElemento.id = "check";
+                const name = document.createElement('label');
+                const salto = document.createElement('br');
+                name.appendChild(document.createTextNode(textoString));
+                lista.appendChild(nuevoElemento);
+                lista.appendChild(name);
+                lista.appendChild(salto);
+                valores.push(textoString);
+                localStorage.setItem('valores', JSON.stringify(valores));
+                console.log(localStorage.getItem('valores'));
+                texto.value = '';
+            }
+        });
+
+        botonEC.addEventListener('click', function () {
+            while (lista.firstChild) {
+                if (lista.firstChil) {
+                    lista.removeChild(lista.firstChild);
+                }
+            }
+        });
+
+        botonET.addEventListener('click', function () {
+            const valores = JSON.parse(localStorage.getItem('valores')) || [];
+            while (lista.firstChild) {
+                lista.removeChild(lista.firstChild);
+            }
+            localStorage.clear();
+        });
+
+    </script>
+</body>
+
+</html>
